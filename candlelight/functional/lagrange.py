@@ -8,7 +8,7 @@ def lagrange1d(
 ) -> torch.Tensor:
     n = node.size(0) - 1
     inverse_factorial = torch.exp(
-        -torch.lgamma(torch.arange(1, n + 2, dtype=torch.float64))
+        -torch.lgamma(torch.arange(n + 1, dtype=torch.float64) + 1)
     )
     a = (
         pow(n / (domain[1] - domain[0]), n)
