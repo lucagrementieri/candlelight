@@ -12,14 +12,14 @@ test_params = [
 ]
 
 
-@pytest.mark.parametrize('input, node, domain', test_params)
-def test_lagrange1d(input, node, domain):
-    x = np.linspace(domain[0], domain[1], node.size)
-    polynomial = scipy.interpolate.lagrange(x, node)
+@pytest.mark.parametrize('input, value, domain', test_params)
+def test_lagrange1d(input, value, domain):
+    x = np.linspace(domain[0], domain[1], value.size)
+    polynomial = scipy.interpolate.lagrange(x, value)
     numpy_result = polynomial(input)
 
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     input_tensor = torch.tensor(input, dtype=torch.float32, device=device)
-    node_tensor = torch.tensor(node, dtype=torch.float32, device=device)
+    node_tensor = torch.tensor(value, dtype=torch.float32, device=device)
     torch_result = lagrange1d(input_tensor, node_tensor, domain).numpy()
     assert np.allclose(numpy_result, torch_result)

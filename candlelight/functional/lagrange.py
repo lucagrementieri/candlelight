@@ -4,9 +4,9 @@ import torch
 
 
 def lagrange1d(
-    input: torch.Tensor, node: torch.Tensor, domain: Tuple[float, float] = (0, 1)
+    input: torch.Tensor, value: torch.Tensor, domain: Tuple[float, float] = (0, 1)
 ) -> torch.Tensor:
-    n = node.size(0) - 1
+    n = value.size(0) - 1
     inverse_factorial = torch.exp(
         -torch.lgamma(torch.arange(n + 1, dtype=torch.float64) + 1)
     )
@@ -16,7 +16,7 @@ def lagrange1d(
         * inverse_factorial.flip(dims=(0,))
     ).float()
     a[(n + 1) % 2 :: 2] *= -1
-    c = a * node
+    c = a * value
     x = torch.linspace(domain[0], domain[1], n + 1, dtype=torch.float32)
     x = x.view(*(1,) * input.ndim, -1)
     d = torch.unsqueeze(input.unsqueeze(dim=-1) - x, dim=-2)
