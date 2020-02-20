@@ -26,7 +26,7 @@ with open(here / 'README.md', encoding='utf-8') as f:
 setup(
     name='candlelight',
     version=find_version('candlelight', '__init__.py'),
-    description='Collection of PyTorch layers modelling functions through splines',
+    description='PyTorch layers to parametrize functions through interpolation',
     long_description=long_description,
     author='Nextbit AI Team',
     author_email='lgrementieri@nextbit.it',
@@ -37,12 +37,10 @@ setup(
         'License :: Apache 2.0',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8'
+        'Programming Language :: Python :: 3.8',
     ],
     keywords='pytorch layer function approximation spline',
     packages=find_packages(exclude=['build', 'dist', 'docs', 'tests']),
     python_requires='>=3.6',
-    install_requires=[
-        'torch >= 1.4',
-    ],
+    install_requires=['torch >= 1.4'],
 )
