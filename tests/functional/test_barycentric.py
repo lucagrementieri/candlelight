@@ -6,7 +6,7 @@ import torch
 from candlelight.functional import barycentric1d
 
 test_params = [
-    (np.linspace(0.1, 1.5, 12), np.array([1, 4, 6, 9]), (0, 1)),
+    (np.linspace(0.1, 0.9, 12), np.array([1, 4, 6, 9]), (0, 1)),
     (np.linspace(2.6, 5, 14), np.array([6, 1, 2.4, 3.2]), (2, 5)),
     (np.linspace(1, 2, 36).reshape(6, 6), np.array([0.1, 0.3, 0.2, 0.5, 0.7]), (0, 2)),
 ]
