@@ -3,19 +3,8 @@ from typing import Tuple
 import torch
 
 
-def endpoint_slope(delta1: torch.Tensor, delta2: torch.Tensor) -> torch.Tensor:
-    d = (3 * delta1 - delta2) / 2
-    if torch.sign(d) != torch.sign(delta1):
-        d = torch.zeros_like(delta1)
-    elif torch.sign(delta1) != torch.sign(delta2) and torch.abs(d) > torch.abs(
-            3 * delta1
-    ):
-        d = 3 * delta1
-    return d
-
-
 def akima1d(
-        input: torch.Tensor, value: torch.Tensor, domain: Tuple[float, float] = (0, 1)
+    input: torch.Tensor, value: torch.Tensor, domain: Tuple[float, float] = (0, 1)
 ) -> torch.Tensor:
     n = value.size(0) - 1
     h = (domain[1] - domain[0]) / n
