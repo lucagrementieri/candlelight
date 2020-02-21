@@ -23,6 +23,4 @@ def test_pchip1d(input, value, domain):
     input_tensor = torch.tensor(input, dtype=torch.float32, device=device)
     node_tensor = torch.tensor(value, dtype=torch.float32, device=device)
     torch_result = pchip1d(input_tensor, node_tensor, domain).numpy()
-    print(numpy_result)
-    print(torch_result)
     assert np.allclose(numpy_result, torch_result)
