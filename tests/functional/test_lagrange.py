@@ -21,5 +21,5 @@ def test_lagrange1d(input, value, domain):
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     input_tensor = torch.tensor(input, dtype=torch.float32, device=device)
     node_tensor = torch.tensor(value, dtype=torch.float32, device=device)
-    torch_result = lagrange1d(input_tensor, node_tensor, domain).numpy()
+    torch_result = lagrange1d(input_tensor, node_tensor, domain).cpu().numpy()
     assert np.allclose(numpy_result, torch_result)
