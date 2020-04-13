@@ -3,10 +3,10 @@ from typing import Tuple
 import torch
 import torch.nn as nn
 
-from candlelight.functional import krogh
+from candlelight.functional import akima
 
 
-class Krogh(nn.Module):
+class Linear(nn.Module):
     def __init__(self, nodes: int, domain: Tuple[float, float] = (0, 1)):
         super().__init__()
         default_values = torch.linspace(
@@ -16,4 +16,4 @@ class Krogh(nn.Module):
         self.domain = domain
 
     def forward(self, input: torch.Tensor) -> torch.Tensor:
-        return krogh(input, self.value, self.domain)
+        return akima(input, self.value, self.domain)

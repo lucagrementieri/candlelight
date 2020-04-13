@@ -13,7 +13,7 @@ test_params = [
 
 
 @pytest.mark.parametrize('input, value, domain', test_params)
-def test_krogh1d(input, value, domain):
+def test_krogh(input, value, domain):
     x = np.linspace(domain[0], domain[1], value.size)
     polynomial = scipy.interpolate.KroghInterpolator(x, value)
     numpy_result = polynomial(input)

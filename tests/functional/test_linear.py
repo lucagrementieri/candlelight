@@ -3,7 +3,7 @@ import pytest
 import scipy.interpolate
 import torch
 
-from candlelight.functional import cubic
+from candlelight.functional import linear
 
 test_params = [
     (np.linspace(0.1, 0.9, 12), np.array([1, 4, 6, 9]), (0, 1)),
@@ -14,13 +14,13 @@ test_params = [
 
 
 @pytest.mark.parametrize('input, value, domain', test_params)
-def test_cubic(input, value, domain):
+def test_linear(input, value, domain):
     x = np.linspace(domain[0], domain[1], value.size)
-    spline = scipy.interpolate.CubicSpline(x, value, bc_type='natural')
+    spline = scipy.interpolate.interp1d(x, value, copy=False, assume_sorted=True)
     numpy_result = spline(input)
 
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     input_tensor = torch.tensor(input, dtype=torch.float32, device=device)
     node_tensor = torch.tensor(value, dtype=torch.float32, device=device)
-    torch_result = cubic(input_tensor, node_tensor, domain).cpu().numpy()
+    torch_result = linear(input_tensor, node_tensor, domain).cpu().numpy()
     assert np.allclose(numpy_result, torch_result)

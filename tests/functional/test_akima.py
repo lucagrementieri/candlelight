@@ -14,7 +14,7 @@ test_params = [
 
 
 @pytest.mark.parametrize('input, value, domain', test_params)
-def test_akima1d(input, value, domain):
+def test_akima(input, value, domain):
     x = np.linspace(domain[0], domain[1], value.size)
     spline = scipy.interpolate.Akima1DInterpolator(x, value)
     numpy_result = spline(input)
