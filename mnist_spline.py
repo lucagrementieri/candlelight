@@ -8,7 +8,7 @@ import torch.utils.data
 from torch.optim.lr_scheduler import StepLR
 from torchvision import datasets, transforms
 
-from candlelight.layers import Barycentric
+from candlelight.layers import Akima
 
 
 class Net(nn.Module):
@@ -20,20 +20,20 @@ class Net(nn.Module):
         self.dropout2 = nn.Dropout2d(0.5)
         self.fc1 = nn.Linear(9216, 128)
         self.fc2 = nn.Linear(128, 10)
-        self.barycentric1 = Barycentric(101, (-10, 10))
-        self.barycentric2 = Barycentric(101, (-10, 10))
-        self.barycentric3 = Barycentric(101, (-10, 10))
+        self.akima1 = Akima(101, (-10, 10))
+        self.akima2 = Akima(101, (-10, 10))
+        self.akima3 = Akima(101, (-10, 10))
 
     def forward(self, x):
         x = self.conv1(x)
-        x = self.barycentric1(x)
+        x = self.akima1(x)
         x = self.conv2(x)
-        x = self.barycentric2(x)
+        x = self.akima2(x)
         x = F.max_pool2d(x, 2)
         x = self.dropout1(x)
         x = torch.flatten(x, 1)
         x = self.fc1(x)
-        x = self.barycentric3(x)
+        x = self.akima3(x)
         x = self.dropout2(x)
         x = self.fc2(x)
         output = F.log_softmax(x, dim=1)
