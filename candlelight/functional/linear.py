@@ -5,7 +5,7 @@ import torch.nn.functional as F
 
 
 def linear(
-        input: torch.Tensor, value: torch.Tensor, domain: Tuple[float, float] = (0, 1)
+    input: torch.Tensor, value: torch.Tensor, domain: Tuple[float, float] = (0, 1)
 ) -> torch.Tensor:
     input_shape = input.shape
     input = 2 * (input.flatten() - domain[1]) / (domain[1] - domain[0]) + 1
