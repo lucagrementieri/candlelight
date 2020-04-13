@@ -15,7 +15,7 @@ def endpoint_slope(delta1: torch.Tensor, delta2: torch.Tensor) -> torch.Tensor:
     return d
 
 
-def pchip1d(
+def pchip(
     input: torch.Tensor, value: torch.Tensor, domain: Tuple[float, float] = (0, 1)
 ) -> torch.Tensor:
     n = value.size(0) - 1
