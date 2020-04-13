@@ -1,18 +1,21 @@
+from typing import Tuple
+
 import torch
 
 
 def akima(
-    input: torch.Tensor, node: torch.Tensor, value: torch.Tensor
+    input: torch.Tensor, value: torch.Tensor, domain: Tuple[float, float] = (0, 1)
 ) -> torch.Tensor:
     n = value.size(0) - 1
-    h = (node[-1] - node[0]) / n
+    h = (domain[1] - domain[0]) / n
     m = (value[1:] - value[:-1]) / h
     for _ in range(2):
         m = torch.cat((2 * m[:1] - m[1:2], m, 2 * m[-1:] - m[-2:-1]))
     t = torch.abs(m[3:] - m[2:-1]) * m[1:-2] + torch.abs(m[1:-2] - m[:-3]) * m[2:-1]
     t /= torch.abs(m[3:] - m[2:-1]) + torch.abs(m[1:-2] - m[:-3]) + 1e-8
-    interval = torch.clamp((input - node[0]) // h, 0, n - 1).long()
-    d = input - node[interval]
+    interval = torch.clamp((input - domain[0]) // h, 0, n - 1).long()
+    x = torch.linspace(domain[0], domain[1], n + 1, dtype=torch.float32, device=input.device)
+    d = input - x[interval]
     d2 = torch.pow(d, 2)
     d3 = d2 * d
     p0 = value[interval]
