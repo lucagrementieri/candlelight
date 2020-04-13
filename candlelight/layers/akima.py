@@ -9,7 +9,7 @@ from candlelight.functional import akima
 class Akima(nn.Module):
     def __init__(self, nodes: int, domain: Tuple[float, float] = (0, 1)):
         super().__init__()
-        self.node = torch.linspace(domain[0], domain[1], nodes)
+        self.register_buffer('node', torch.linspace(domain[0], domain[1], nodes))
         self.value = nn.Parameter(self.node.clone(), requires_grad=True)
         self.domain = domain
 
