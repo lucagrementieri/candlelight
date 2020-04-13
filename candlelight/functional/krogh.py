@@ -3,7 +3,7 @@ from typing import Tuple
 import torch
 
 
-def krogh1d(
+def krogh(
     input: torch.Tensor, value: torch.Tensor, domain: Tuple[float, float] = (0, 1)
 ) -> torch.Tensor:
     n = value.size(0) - 1

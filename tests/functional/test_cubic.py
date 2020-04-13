@@ -3,7 +3,7 @@ import pytest
 import scipy.interpolate
 import torch
 
-from candlelight.functional import cubic1d
+from candlelight.functional import cubic
 
 test_params = [
     (np.linspace(0.1, 0.9, 12), np.array([1, 4, 6, 9]), (0, 1)),
@@ -22,5 +22,5 @@ def test_cubic1d(input, value, domain):
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     input_tensor = torch.tensor(input, dtype=torch.float32, device=device)
     node_tensor = torch.tensor(value, dtype=torch.float32, device=device)
-    torch_result = cubic1d(input_tensor, node_tensor, domain).cpu().numpy()
+    torch_result = cubic(input_tensor, node_tensor, domain).cpu().numpy()
     assert np.allclose(numpy_result, torch_result)

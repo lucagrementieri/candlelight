@@ -3,7 +3,7 @@ import pytest
 import scipy.interpolate
 import torch
 
-from candlelight.functional import barycentric1d
+from candlelight.functional import barycentric
 
 test_params = [
     (np.linspace(0.1, 0.9, 12), np.array([1, 4, 6, 9]), (0, 1)),
@@ -21,5 +21,5 @@ def test_barycentric1d(input, value, domain):
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     input_tensor = torch.tensor(input, dtype=torch.float32, device=device)
     node_tensor = torch.tensor(value, dtype=torch.float32, device=device)
-    torch_result = barycentric1d(input_tensor, node_tensor, domain).cpu().numpy()
+    torch_result = barycentric(input_tensor, node_tensor, domain).cpu().numpy()
     assert np.allclose(numpy_result, torch_result)
