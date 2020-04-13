@@ -14,7 +14,7 @@ test_params = [
 
 
 @pytest.mark.parametrize('input, value, domain', test_params)
-def test_cubic1d(input, value, domain):
+def test_cubic(input, value, domain):
     x = np.linspace(domain[0], domain[1], value.size)
     spline = scipy.interpolate.CubicSpline(x, value, bc_type='natural')
     numpy_result = spline(input)
