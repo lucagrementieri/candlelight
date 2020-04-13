@@ -3,7 +3,7 @@ from typing import Tuple
 import torch
 
 
-def ispline(
+def ispline1d(
     input: torch.Tensor, weight: torch.Tensor, domain: Tuple[float, float] = (0, 1)
 ) -> torch.Tensor:
     n = weight.size(0) - 1
