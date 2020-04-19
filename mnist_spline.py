@@ -187,10 +187,7 @@ def main():
         train(args, model, device, train_loader, optimizer, epoch)
         test(model, device, test_loader)
         scheduler.step()
-        # print('Activation', model.interp.value.data)
-        increments = F.relu(model.interp.increments.data)
-        cumulative_value = torch.cumsum(increments, dim=0) + model.interp.start.data
-        print('Activation', cumulative_value)
+        print('Activation', model.interp.value.data)
 
     if args.save_model:
         torch.save(model.state_dict(), "mnist_cnn.pt")
