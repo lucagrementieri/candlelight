@@ -20,7 +20,7 @@ class Net(nn.Module):
         self.dropout2 = nn.Dropout2d(0.5)
         self.fc1 = nn.Linear(9216, 128)
         self.fc2 = nn.Linear(128, 10)
-        self.interp = Linear(11, (-5, 5))
+        self.interp = Linear(51, (-5, 5))
 
     def forward(self, x):
         x = self.conv1(x)
@@ -187,8 +187,7 @@ def main():
         train(args, model, device, train_loader, optimizer, epoch)
         test(model, device, test_loader)
         scheduler.step()
-
-    print(model.interp.value.data)
+        print('Activation', model.interp.value.data)
 
     if args.save_model:
         torch.save(model.state_dict(), "mnist_cnn.pt")
