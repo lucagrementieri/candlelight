@@ -38,12 +38,8 @@ class Net(nn.Module):
         return output
 
 
-import time
-
-
 def train(args, model, device, train_loader, optimizer, epoch):
     model.train()
-    start = time.time()
     for batch_idx, (data, target) in enumerate(train_loader):
         data, target = data.to(device), target.to(device)
         optimizer.zero_grad()
@@ -52,7 +48,6 @@ def train(args, model, device, train_loader, optimizer, epoch):
         loss.backward()
         optimizer.step()
         if batch_idx % args.log_interval == 0:
-            end = time.time()
             print(
                 'Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
                     epoch,
@@ -62,8 +57,6 @@ def train(args, model, device, train_loader, optimizer, epoch):
                     loss.item(),
                 )
             )
-            print(f'Time: {end - start:.3f}s')
-            start = time.time()
 
 
 def test(model, device, test_loader):
