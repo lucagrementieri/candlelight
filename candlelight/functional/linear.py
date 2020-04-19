@@ -4,7 +4,7 @@ import torch
 
 
 def linear(
-        input: torch.Tensor, value: torch.Tensor, domain: Tuple[float, float] = (0, 1)
+    input: torch.Tensor, value: torch.Tensor, domain: Tuple[float, float] = (0, 1)
 ) -> torch.Tensor:
     n = value.numel() - 1
     input = input.clamp_(*domain)
