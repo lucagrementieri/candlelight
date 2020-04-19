@@ -12,7 +12,22 @@ class Linear(nn.Module):
         default_values = torch.linspace(
             domain[0], domain[1], nodes, dtype=torch.float32
         )
-        self.value = nn.Parameter(default_values, requires_grad=True)
+        default_values = torch.tensor(
+            [
+                -4.0498,
+                -3.5387,
+                -2.5938,
+                -1.2334,
+                -0.0649,
+                -0.1820,
+                0.9610,
+                1.4660,
+                2.7531,
+                3.4607,
+                3.9308,
+            ]
+        )
+        self.value = nn.Parameter(default_values, requires_grad=False)
         self.domain = domain
 
     def forward(self, input: torch.Tensor) -> torch.Tensor:
