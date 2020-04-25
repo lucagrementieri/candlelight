@@ -8,7 +8,7 @@ import torch.utils.data
 from torch.optim.lr_scheduler import StepLR
 from torchvision import datasets, transforms
 
-from candlelight.layers import Linear
+from candlelight.layers import Akima
 
 
 class Net(nn.Module):
@@ -20,7 +20,7 @@ class Net(nn.Module):
         self.dropout2 = nn.Dropout2d(0.5)
         self.fc1 = nn.Linear(9216, 128)
         self.fc2 = nn.Linear(128, 10)
-        self.interp = Linear(11, (-5, 5))
+        self.interp = Akima(11, (-5, 5))
 
     def forward(self, x):
         x = self.conv1(x)
