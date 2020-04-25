@@ -11,8 +11,15 @@ def akima(
     n = value.size(0) - 1
     h = (domain[1] - domain[0]) / n
     m = (value[1:] - value[:-1]) / h
-    for _ in range(2):
-        m = torch.cat((2 * m[:1] - m[1:2], m, 2 * m[-1:] - m[-2:-1]))
+    m = torch.cat(
+        (
+            3 * m[:1] - 2 * m[1:2],
+            2 * m[:1] - m[1:2],
+            m,
+            2 * m[-1:] - m[-2:-1],
+            3 * m[-1:] - 2 * m[-2:-1],
+        )
+    )
     s = torch.abs(m[1:] - m[:-1])
     t = (s[2:] * m[1:-2] + s[:-2] * m[2:-1]) / (s[2:] + s[:-2] + eps)
 
