@@ -3,7 +3,7 @@ from typing import Tuple
 import torch
 import torch.nn as nn
 
-from candlelight.functional import akima
+from candlelight.functional import linear
 
 
 class Linear(nn.Module):
@@ -16,4 +16,4 @@ class Linear(nn.Module):
         self.domain = domain
 
     def forward(self, input: torch.Tensor) -> torch.Tensor:
-        return akima(input, self.value, self.domain)
+        return linear(input, self.value, self.domain)
