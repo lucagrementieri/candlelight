@@ -17,7 +17,9 @@ def lagrange(
     )
     a[(n + 1) % 2 :: 2] *= -1
     c = a * value
-    x = torch.linspace(domain[0], domain[1], n + 1, dtype=torch.float32)
+    x = torch.linspace(
+        domain[0], domain[1], n + 1, dtype=torch.float32, device=input.device
+    )
     d = torch.unsqueeze(input.unsqueeze(dim=-1) - x, dim=-2)
     d = d.repeat(*(1,) * input.ndim, n + 1, 1)
     d[..., torch.arange(n + 1), torch.arange(n + 1)] = 1

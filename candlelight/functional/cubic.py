@@ -17,7 +17,9 @@ def cubic(
     z = z.squeeze_(-1)
 
     interval = torch.clamp((input - domain[0]) // h, 0, n - 1).long()
-    x = torch.linspace(domain[0], domain[1], n + 1, dtype=torch.float32)
+    x = torch.linspace(
+        domain[0], domain[1], n + 1, dtype=torch.float32, device=input.device
+    )
     distance_left = input - x[interval]
     distance_right = x[1 + interval] - input
     cubic_left = torch.pow(distance_left, 3)
