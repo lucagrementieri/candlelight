@@ -1,4 +1,5 @@
 import argparse
+import time
 
 import torch
 import torch.nn as nn
@@ -8,7 +9,7 @@ import torch.utils.data
 from torch.optim.lr_scheduler import StepLR
 from torchvision import datasets, transforms
 
-from candlelight.layers import Linear
+from candlelight.layers import Akima
 
 
 class Net(nn.Module):
@@ -20,7 +21,7 @@ class Net(nn.Module):
         self.dropout2 = nn.Dropout2d(0.5)
         self.fc1 = nn.Linear(9216, 128)
         self.fc2 = nn.Linear(128, 10)
-        self.interp = Linear(11, (-5, 5))
+        self.interp = Akima(11, (-5, 5))
 
     def forward(self, x):
         x = self.conv1(x)
@@ -40,6 +41,7 @@ class Net(nn.Module):
 
 def train(args, model, device, train_loader, optimizer, epoch):
     model.train()
+    start = time.time()
     for batch_idx, (data, target) in enumerate(train_loader):
         data, target = data.to(device), target.to(device)
         optimizer.zero_grad()
@@ -57,6 +59,9 @@ def train(args, model, device, train_loader, optimizer, epoch):
                     loss.item(),
                 )
             )
+            end = time.time()
+            print(f'Epoch time: {end - start}s')
+            start = time.time()
 
 
 def test(model, device, test_loader):
