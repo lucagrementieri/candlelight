@@ -30,32 +30,32 @@ def akima(
 
     p0 = F.grid_sample(
         value.view(1, 1, 1, -1),
-        p + eps,
+        p + 2*eps,
         mode='nearest',
         padding_mode='border',
         align_corners=True,
-    ).view(-1)
+    )
     p1 = F.grid_sample(
         t.view(1, 1, 1, -1),
         p,
         mode='nearest',
         padding_mode='border',
         align_corners=True,
-    ).view(-1)
+    )
     right_t = F.grid_sample(
         t.view(1, 1, 1, -1),
         p + 2 / n,
         mode='nearest',
         padding_mode='border',
         align_corners=True,
-    ).view(-1)
+    )
     left_m = F.grid_sample(
         m[2:-1].view(1, 1, 1, -1),
         p,
         mode='nearest',
         padding_mode='border',
         align_corners=True,
-    ).view(-1)
+    )
     p2 = (3 * left_m - 2 * p1 - right_t) / h
     p3 = (p1 + right_t - 2 * left_m) / h ** 2
     r = p3 * d3 + p2 * d2 + p1 * d + p0
