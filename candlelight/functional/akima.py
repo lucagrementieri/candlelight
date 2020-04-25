@@ -5,9 +5,9 @@ import torch.nn.functional as F
 
 
 def akima(
-        input: torch.Tensor, value: torch.Tensor, domain: Tuple[float, float] = (0, 1), x = None
+    input: torch.Tensor, value: torch.Tensor, domain: Tuple[float, float] = (0, 1)
 ) -> torch.Tensor:
-    eps = 1e-6
+    eps = 1e-8
     n = value.size(0) - 1
     h = (domain[1] - domain[0]) / n
     m = (value[1:] - value[:-1]) / h
@@ -24,17 +24,12 @@ def akima(
     p = p.view(1, 1, -1, 2)
 
     input = input.view(1, 1, 1, -1)
-    # x = torch.linspace(
-    #    domain[0], domain[1], n + 1, dtype=torch.float32, device=input.device
-    # ).view(1, 1, 1, -1)
-    x = x.view(1,1,1,-1)
+    x = torch.linspace(
+        domain[0], domain[1], n + 1, dtype=torch.float32, device=input.device
+    ).view(1, 1, 1, -1)
 
     d = input - F.grid_sample(
-        x,
-        p,
-        mode='nearest',
-        padding_mode='border',
-        align_corners=True,
+        x, p, mode='nearest', padding_mode='border', align_corners=True
     )
     d2 = torch.pow(d, 2)
     d3 = d2 * d

@@ -14,7 +14,6 @@ class Akima(nn.Module):
         )
         self.value = nn.Parameter(default_values, requires_grad=True)
         self.domain = domain
-        self.register_buffer('x', default_values)
 
     def forward(self, input: torch.Tensor) -> torch.Tensor:
-        return akima(input, self.value, self.domain, self.x)
+        return akima(input, self.value, self.domain)
