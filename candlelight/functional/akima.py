@@ -13,8 +13,8 @@ def akima(
     m = (value[1:] - value[:-1]) / h
     for _ in range(2):
         m = torch.cat((2 * m[:1] - m[1:2], m, 2 * m[-1:] - m[-2:-1]))
-    t = torch.abs(m[3:] - m[2:-1]) * m[1:-2] + torch.abs(m[1:-2] - m[:-3]) * m[2:-1]
-    t /= torch.abs(m[3:] - m[2:-1]) + torch.abs(m[1:-2] - m[:-3]) + eps
+    s = torch.abs(m[1:] - m[:-1])
+    t = (s[2:] * m[1:-2] + s[:-2] * m[2:-1]) / (s[2:] + s[:-2] + eps)
 
     input_shape = input.shape
     p = 2 * (input.flatten() - domain[1]) / (domain[1] - domain[0]) + 1
