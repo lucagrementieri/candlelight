@@ -14,7 +14,9 @@ def akima(
     t = torch.abs(m[3:] - m[2:-1]) * m[1:-2] + torch.abs(m[1:-2] - m[:-3]) * m[2:-1]
     t /= torch.abs(m[3:] - m[2:-1]) + torch.abs(m[1:-2] - m[:-3]) + 1e-8
     interval = torch.clamp((input - domain[0]) // h, 0, n - 1).long()
-    x = torch.linspace(domain[0], domain[1], n + 1, dtype=torch.float32, device=input.device)
+    x = torch.linspace(
+        domain[0], domain[1], n + 1, dtype=torch.float32, device=input.device
+    )
     d = input - x[interval]
     d2 = torch.pow(d, 2)
     d3 = d2 * d

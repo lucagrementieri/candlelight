@@ -12,7 +12,9 @@ def barycentric(
     ).float()
     w = inverse_factorial * inverse_factorial.flip(dims=(0,))
     w[::2] *= -1
-    x = torch.linspace(domain[0], domain[1], n + 1, dtype=torch.float32)
+    x = torch.linspace(
+        domain[0], domain[1], n + 1, dtype=torch.float32, device=input.device
+    )
     d = input.unsqueeze(dim=-1) - x + 1e-8
     c = w / d
     return torch.matmul(c, value) / torch.sum(c, dim=-1)

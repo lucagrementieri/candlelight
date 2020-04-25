@@ -30,7 +30,9 @@ def pchip(
     )
     d[1:-1] *= F.relu(torch.sign(delta[1:]) * torch.sign(delta[:-1]))
     interval = torch.clamp((input - domain[0]) // h, 0, n - 1).long()
-    x = torch.linspace(domain[0], domain[1], n + 1, dtype=torch.float32)
+    x = torch.linspace(
+        domain[0], domain[1], n + 1, dtype=torch.float32, device=input.device
+    )
     distance_left = input - x[interval]
     distance_right = input - x[1 + interval]
     squared_left = torch.pow(distance_left, 2)
