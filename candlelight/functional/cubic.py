@@ -1,6 +1,7 @@
 from typing import Tuple
 
 import torch
+import torch.nn.functional as F
 
 
 def cubic(
@@ -12,7 +13,7 @@ def cubic(
     A += A.T
     A[0, 1] = A[-1, -2] = 0
     d = 3 * (value[2:] - 2 * value[1:-1] + value[:-2]) / h ** 2
-    d = torch.cat((torch.zeros(1), d, torch.zeros(1))).unsqueeze_(-1)
+    d = F.pad(d, [1, 1]).unsqueeze_(-1)
     z, _ = torch.solve(d, A)
     z = z.squeeze_(-1)
 
