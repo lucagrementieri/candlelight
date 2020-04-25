@@ -17,7 +17,7 @@ def akima(
     t /= torch.abs(m[3:] - m[2:-1]) + torch.abs(m[1:-2] - m[:-3]) + eps
 
     input_shape = input.shape
-    p = 2 * (input.flatten() - domain[1]) / (domain[1] - domain[0]) + 1
+    p = 2 * (input.view(-1) - domain[1]) / (domain[1] - domain[0]) + 1
     p = torch.clamp(p, -1 + eps, 1 - eps)
     p -= 1 / n
     p = torch.stack((p, torch.zeros_like(p)), dim=-1)
