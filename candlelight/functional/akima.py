@@ -6,7 +6,7 @@ from candlelight.vector_sampler import VectorSampler
 
 
 def akima(
-        input: torch.Tensor, value: torch.Tensor, domain: Tuple[float, float] = (0, 1)
+    input: torch.Tensor, value: torch.Tensor, domain: Tuple[float, float] = (0, 1)
 ) -> torch.Tensor:
     eps = 1e-8
     n = value.size(0) - 1
