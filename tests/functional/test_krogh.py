@@ -24,6 +24,4 @@ def test_krogh(input, value, domain):
     input_tensor = torch.tensor(input, dtype=torch.float32, device=device)
     node_tensor = torch.tensor(value, dtype=torch.float32, device=device)
     torch_result = krogh(input_tensor, node_tensor, domain).cpu().numpy()
-    print(torch_result)
-    print(numpy_result)
     assert np.allclose(numpy_result, torch_result)

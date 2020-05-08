@@ -9,7 +9,7 @@ def lagrange(
     n = value.size(0) - 1
     inverse_factorial = torch.exp(
         -torch.lgamma(torch.arange(n + 1, dtype=torch.float64) + 1)
-    ).float()
+    )
     a = (
         pow(n / (domain[1] - domain[0]), n)
         * inverse_factorial
@@ -18,10 +18,10 @@ def lagrange(
     a[(n + 1) % 2 :: 2] *= -1
     c = a * value
     x = torch.linspace(
-        domain[0], domain[1], n + 1, dtype=torch.float32, device=input.device
+        domain[0], domain[1], n + 1, dtype=torch.float64, device=input.device
     )
     d = torch.unsqueeze(input.unsqueeze(dim=-1) - x, dim=-2)
     d = d.repeat(*(1,) * input.ndim, n + 1, 1)
     d[..., torch.arange(n + 1), torch.arange(n + 1)] = 1
     d = d.prod(dim=-1)
-    return torch.matmul(d, c)
+    return torch.matmul(d, c).float()
