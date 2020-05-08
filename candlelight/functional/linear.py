@@ -12,7 +12,6 @@ def linear(
     input = torch.stack((input, torch.zeros_like(input)), dim=-1)
     input = input.view(1, 1, -1, 2)
     value = value.view(1, 1, 1, -1)
-    # noinspection PyArgumentList
     interpolation = F.grid_sample(
         value, input, padding_mode='border', align_corners=True
     )
