@@ -13,7 +13,7 @@ def krogh(
     q = torch.cumprod(input.double().unsqueeze(dim=-1) - x, dim=-1)
     p = torch.full_like(input, value[0].item())
     for i in range(n):
-        value[i + 1:] -= value[i]
-        value[i + 1:] /= x[i + 1 :] - x[i]
+        value[i + 1 :] -= value[i]
+        value[i + 1 :] /= x[i + 1 :] - x[i]
         p += q[..., i] * value[i + 1]
     return p
